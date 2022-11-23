@@ -47,6 +47,10 @@ class handDetection():
                         cv2.circle(img, (cx,cy), 5, (255,255,0), cv2.FILLED)
         return lmList
 
+        
+
+
+
 def main():
     prevTime = 0
     curTime = 0
@@ -60,6 +64,9 @@ def main():
         lmList = detector.findPos(img)
         if len(lmList) != 0:
             print(lmList[4])
+
+
+        #Calculate FPS
         curTime = time.time()
         fps = 1/(curTime-prevTime)
         prevTime = curTime
