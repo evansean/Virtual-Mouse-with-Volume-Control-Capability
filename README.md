@@ -1,2 +1,2 @@
 # virtualmouse
-Implementing a virtual mouse using OpenCV
+Implementing a virtual mouse with volume control capability using OpenCV and MediaPipe
