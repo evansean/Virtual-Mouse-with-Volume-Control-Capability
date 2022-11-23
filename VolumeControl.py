@@ -54,9 +54,9 @@ while True:
         #Vol range -96.0 - 0.0
 
         #calibrate range in the future
-        vol = np.interp(length, [0,260],[minVol,maxVol])
-        volBar = np.interp(length, [0,260],[400,150])
-        volPer = np.interp(length, [0,260],[0,100])
+        vol = np.interp(length, [30,260],[minVol,maxVol])
+        volBar = np.interp(length, [30,260],[400,150])
+        volPer = np.interp(length, [30,260],[0,100])
 
 
         print(int(length),vol)
