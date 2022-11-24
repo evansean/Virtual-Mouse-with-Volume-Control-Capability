@@ -36,6 +36,7 @@ while True:
     sucess,img = cap.read()
     img = detector.findHands(img)
     lmList = detector.findPos(img,draw=False)
+    
     if len(lmList)!= 0:
         # print(lmList[4],lmList[8])
         x1,y1 = lmList[4][1], lmList[4][2]
