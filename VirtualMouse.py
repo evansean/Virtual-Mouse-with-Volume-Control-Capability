@@ -29,7 +29,7 @@ vol=0
 volBar=400
 volPer=0
 area = 0
-mode = ''
+mode = 'deactivation'
 #-----VARIABLES-------
 cap = cv2.VideoCapture(0)
 #3. CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.
@@ -45,11 +45,7 @@ while True:
     fingers=[]
     cv2.rectangle(img,(frameR,frameR), (widthCam-frameR,heightCam-frameR),(255,0,255),2)
 
-    #Left click
-    #Scroll up
-    #Scroll down
-    #Volume control
-
+ 
 
     if len(lmList) != 0:
         fingers = detector.fingersUp()
@@ -57,6 +53,19 @@ while True:
         x1,y1 = lmList[20][1:]
 
         #--------MODE SELECTION-----------#
+        # Deactivate Detection
+        # Point middle finger to deactivate detection
+        if fingers == [0,0,1,0,0]:
+            mode = 'deactivation'
+
+        if mode == 'deactivation':
+            active= 1
+            # raise pinky only to activate detection
+            if fingers == [0,0,0,0,1]:
+                active=0
+                mode = ''
+            continue
+       
         # Cursor mode: All fingers up
         if fingers == [1,1,1,1,1] and active==0:
             active=1
@@ -90,7 +99,8 @@ while True:
         if fingers == [0,0,0,0,0] and active==0:
             active=1
             mode = 'volMode'
-            
+        
+        
 
         if mode == 'volMode':
             active=1
@@ -109,7 +119,9 @@ while True:
                 # reduce resolution to make it smoother in terms of steps
                 smooth=5
                 volPer=smooth*round(volPer/smooth)
-    
+                cv2.rectangle(img, (50,150), (85,400), (0,255,0), 3)
+                cv2.rectangle(img, (50,int(volBar)), (85,400), (0,255,0), cv2.FILLED)
+                cv2.putText(img, f'{int(volPer)} %',(40,450), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,0), 3)
                 if fingers == [1,1,1,1,1]:
                     active=0
                     mode=''
