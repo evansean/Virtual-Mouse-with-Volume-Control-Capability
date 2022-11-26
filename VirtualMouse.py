@@ -14,13 +14,13 @@ def main():
     #-----VARIABLES-------
     widthCam, heightCam = 640,480
     widthScreen,heightScreen = autopy.screen.size() #1280,720
-    frameR = 100 #frame reduction
-    smooth = 5
+    frameR = 120 #frame reduction
+    smooth = 2
     pLocX,pLocY = 0,0
     curLocx,curLocY =0,0
     prevTime=0
     active=0
-    devices = AudioUtilities.GetSpeakers()
+    devices = AudioUtilities.GetSpeakers() #here to edit main speaker source
     interface = devices.Activate(
         IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
@@ -129,6 +129,8 @@ def main():
                         mode=''
                     if not fingers[4]:
                         volume.SetMasterVolumeLevelScalar(volPer/100,None)
+                        # volume.SetMasterVolumeLevel(volPer//100, None)
+
         #calculate fps
         curTime = time.time()
         fps = 1/(curTime-prevTime)
@@ -137,7 +139,7 @@ def main():
         # Display
         cv2.putText(img, f'FPS: {int(fps)} ',(10,70), cv2.FONT_HERSHEY_SIMPLEX, 1,(0,0,0), 3)
         cv2.imshow("Gesture Controlled Mouse + Volume Controller",img)
-        cv2.waitKey(1)
-
+        if cv2.waitKey(1) & 0xff == ord('x'):
+                break
 if __name__ == '__main__':
     main()
