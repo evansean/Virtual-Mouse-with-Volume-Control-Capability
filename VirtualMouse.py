@@ -46,14 +46,14 @@ def main():
         lmList,bbox = detector.findPos(img)
         fingers=[]
         cv2.rectangle(img,(frameR,frameR), (widthCam-frameR,heightCam-frameR),(255,0,255),2)
-
+        
     
 
         if len(lmList) != 0:
             fingers = detector.fingersUp()
             # Get coordinates of index tip
             x1,y1 = lmList[20][1:]
-
+            print(fingers)
             #--------MODE SELECTION-----------#
             # Deactivate Detection
             # Point middle finger to deactivate detection
@@ -63,7 +63,7 @@ def main():
             if mode == 'deactivation':
                 active= 1
                 # raise pinky only to activate detection
-                if fingers == [0,0,0,0,1]:
+                if fingers == [0,0,1,1,0]:
                     active=0
                     mode = ''
                 continue
@@ -84,7 +84,7 @@ def main():
                 active=0
             # Clicking mode
             if fingers == [1,0,1,1,1]:
-                pyautogui.leftClick()
+                pyautogui.leftClick() #pyautogui.FAILSAFE = FALSE to allow movement to corner of screens
             if fingers == [1,1,0,1,1]:
                 pyautogui.rightClick()
             #Scroll up
